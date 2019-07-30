@@ -18,7 +18,7 @@ def closestColor(npt, color_clusters):
   i = numpy.argmin(disArr)
   return color_clusters[i]
 
-im = Image.open('sakshi.jpeg','r').convert('RGB')
+im = Image.open('lenna.png','r').convert('RGB')
 np_im = numpy.array(im)
 w,h,_ = np_im.shape
 np_im_flatten = np_im.reshape((w*h,3))
@@ -33,7 +33,9 @@ possibleMaps = list(permutations(color_clusters))
 minerror = 100000
 for c in possibleMaps:
   c = numpy.array(c)
-  error = numpy.linalg.norm(c-color)
+  error = 0
+  for i in range(0,4):
+    error += numpy.linalg.norm(c[i]-color[i])
   if(error<minerror):
     minerror = error
     ClusteringMap = c

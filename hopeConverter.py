@@ -10,11 +10,6 @@ red = (195,1,38,255)
 blue = (101,126,148,255)
 black = (1,13,35,255)
 white = (239,213,180,255)
-## BGR
-# red = (38,1,195)
-# blue = (148,126,101)
-# black = (35,13,1)
-# white = (180,213,239)
 color = numpy.array([red,blue,black,white],dtype='uint8')
 
 def closestColor(npt, color_clusters):
@@ -22,7 +17,7 @@ def closestColor(npt, color_clusters):
   i = numpy.argmin(disArr)
   return color_clusters[i]
 
-im = Image.open('Aditi.jpeg','r').convert('RGBA')
+im = Image.open('pp.jpg','r').convert('RGBA')
 np_im = numpy.array(im)
 w,h,_ = np_im.shape
 np_im_flatten = np_im.reshape((w*h,4))
@@ -32,7 +27,6 @@ kmeans = KMeans(n_clusters=4, random_state=0).fit(np_im_png)
 color_clusters = kmeans.cluster_centers_
 print(kmeans.cluster_centers_)
 np_im_convert = numpy.zeros(np_im.shape,dtype='uint8')
-
 
 ClusteringMap = []
 possibleMaps = list(permutations(color))
@@ -49,8 +43,9 @@ for c in possibleMaps:
 print(ClusteringMap)
 for i in range(w):
   for j in range(h):
-    if(numpy.linalg.norm(np_im[i][j])==0 or np_im[i][j][3]==0 ):
-      continue
+    ## Avoid Transparency
+    # if(numpy.linalg.norm(np_im[i][j])==0 or np_im[i][j][3]==0 ):
+      # continue
     x = kmeans.predict([np_im[i][j]])[0]
     np_im_convert[i][j]  = ClusteringMap[x]
 

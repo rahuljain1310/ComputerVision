@@ -17,11 +17,14 @@ np_im_convert = numpy.zeros(np_im.shape,dtype='uint8')
 for i in range(w):
   for j in range(h):
     pixel = np_im[i][j]
-    if( numpy.linalg.norm(pixel-white) < 0.1 ):
+    if( numpy.linalg.norm(pixel-blue) < 0.1 ):
       np_im_convert[i][j] = numpy.array(red)
       continue
     if( numpy.linalg.norm(pixel-red) < 0.1 ):
       np_im_convert[i][j] = numpy.array(white)
+      continue
+    if( numpy.linalg.norm(pixel-white) < 0.1 ):
+      np_im_convert[i][j] = numpy.array(blue)
       continue
     np_im_convert[i][j] = pixel
 

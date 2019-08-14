@@ -10,17 +10,25 @@ red = (195,1,38,255)
 blue = (101,126,148,255)
 black = (1,13,35,255)
 white = (239,213,180,255)
-color = numpy.array([red,blue,black,white],dtype='uint8')
+
+## Color Selection
+color1 = red
+color2 = blue
+color3 =  black
+color4 = white
+color = numpy.array([color1,color2,color3,color4],dtype='uint8')
 
 def closestColor(npt, color_clusters):
   disArr = list(map(lambda t: numpy.linalg.norm(t-npt) ,color_clusters))
   i = numpy.argmin(disArr)
   return color_clusters[i]
 
-im = Image.open('pp.jpg','r').convert('RGBA')
+mode = 'RGBA'
+pixelDim = len(mode)
+im = Image.open('pp.jpg','r').convert(mode)
 np_im = numpy.array(im)
 w,h,_ = np_im.shape
-np_im_flatten = np_im.reshape((w*h,4))
+np_im_flatten = np_im.reshape((w*h,pixelDim))
 np_im_png = np_im_flatten[numpy.linalg.norm(np_im_flatten) !=0][0]
 print(np_im_png.shape)
 kmeans = KMeans(n_clusters=4, random_state=0).fit(np_im_png)

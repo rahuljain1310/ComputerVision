@@ -25,7 +25,8 @@ def closestColor(npt, color_clusters):
 
 mode = 'RGBA'
 pixelDim = len(mode)
-im = Image.open('pp.jpg','r').convert(mode)
+imagename = input()
+im = Image.open(imagename,'r').convert(mode)
 np_im = numpy.array(im)
 w,h,_ = np_im.shape
 np_im_flatten = np_im.reshape((w*h,pixelDim))
